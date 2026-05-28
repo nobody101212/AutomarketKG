@@ -12,12 +12,6 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 
 import os
 from pathlib import Path
-import cloudinary
-cloudinary.config(
-    cloud_name='de1gwaox4',
-    api_key='452555326475415',
-    api_secret='E2mCMpy4bc5NkFaSwNuoloct8pw'
-)
 
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
