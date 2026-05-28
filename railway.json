@@ -1,7 +1,7 @@
 {
   "build": {"builder": "NIXPACKS"},
   "deploy": {
-    "startCommand": "python manage.py migrate && python manage.py collectstatic --noinput && gunicorn avtosalon.wsgi:application --bind 0.0.0.0:$PORT --workers 2",
+    "startCommand": "python manage.py migrate && python manage.py load_brands && python manage.py collectstatic --noinput && gunicorn avtosalon.wsgi:application --bind 0.0.0.0:$PORT --workers 2",
     "restartPolicyType": "ON_FAILURE"
   }
 }
