@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container" style="max-width:800px;padding:32px 20px">
+  <div class="breadcrumb mb-20">
+    <a href="/">Главная</a> / <a href="{{ car.get_absolute_url }}">{{ car }}</a> / Чат
+  </div>
+  <div style="background:var(--white);border-radius:12px;padding:16px 20px;margin-bottom:16px;box-shadow:var(--shadow);display:flex;align-items:center;gap:12px;border:1px solid #e8ecef">
+    <div style="width:44px;height:44px;border-radius:50%;background:var(--light);display:flex;align-items:center;justify-content:center;font-size:20px">👤</div>
+    <div>
+      <div style="font-weight:700;font-size:15px">{{ other_user.first_name|default:other_user.username }}</div>
+      <div style="font-size:12px;color:var(--gray)">{{ car }}</div>
+    </div>
+    <a href="{{ car.get_absolute_url }}" style="margin-left:auto;font-size:13px;color:var(--red)">Смотреть авто →</a>
+  </div>
+
+  <div id="chatBox" style="background:var(--white);border-radius:12px;padding:20px;min-height:400px;max-height:500px;overflow-y:auto;box-shadow:var(--shadow);border:1px solid #e8ecef;display:flex;flex-direction:column;gap:10px;margin-bottom:16px">
+    {% for msg in messages_list %}
+    <div style="display:flex;{% if msg.sender == request.user %}justify-content:flex-end{% else %}justify-content:flex-start{% endif %}">
+      <div style="max-width:70%;padding:10px 14px;border-radius:{% if msg.sender == request.user %}12px 12px 0 12px;background:var(--red);color:white{% else %}12px 12px 12px 0;background:var(--light);color:var(--dark){% endif %}">
+        <div style="font-size:14px;line-height:1.5">{{ msg.text }}</div>
+        <div style="font-size:11px;opacity:0.7;margin-top:4px;text-align:right">{{ msg.created_at|date:"H:i" }}</div>
+      </div>
+    </div>
+    {% empty %}
+    <div style="text-align:center;color:var(--gray);padding:40px 0">
+      <div style="font-size:40px;margin-bottom:8px">💬</div>
+      <p>Начните диалог</p>
+    </div>
+    {% endfor %}
+  </div>
+
+  <form method="post" style="display:flex;gap:10px">
+    {% csrf_token %}
+    <input type="text" name="text" placeholder="Сообщение..." autocomplete="off" required
+           style="flex:1;padding:12px 16px;border:2px solid #e8ecef;border-radius:10px;font-size:14px;outline:none">
+    <button type="submit" class="btn-primary" style="padding:12px 24px;font-size:14px;border-radius:10px">Отправить ✈️</button>
+  </form>
+</div>
+<script>
+  const box = document.getElementById('chatBox');
+  box.scrollTop = box.scrollHeight;
+</script>
+{% endblock %}

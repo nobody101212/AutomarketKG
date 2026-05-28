@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+  <div class="breadcrumb mt-20"><a href="/">Главная</a> / Марки</div>
+  <h1 class="page-title">Марки автомобилей</h1>
+  <div class="brands-grid" style="margin-top:24px">
+    {% for brand in brands %}
+    <a href="/cars/?brand={{ brand.id }}" class="brand-card">
+      <div class="brand-card-icon">🚘</div>
+      <div class="brand-card-name">{{ brand.name }}</div>
+      <div class="brand-card-count">{{ brand.car_count }} авто</div>
+    </a>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

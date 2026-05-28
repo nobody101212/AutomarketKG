@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container" style="max-width:700px;padding:32px 20px">
+  <h1 class="page-title">💬 Мои чаты</h1>
+  <div style="margin-top:20px;display:flex;flex-direction:column;gap:12px">
+    {% for chat in chats %}
+    <a href="{% url 'cars:chat' chat.car.pk chat.other_user.pk %}"
+       style="display:flex;align-items:center;gap:14px;background:var(--white);border-radius:12px;padding:16px;box-shadow:var(--shadow);border:1px solid #e8ecef">
+      <div style="width:48px;height:48px;border-radius:50%;background:var(--light);display:flex;align-items:center;justify-content:center;font-size:22px">👤</div>
+      <div style="flex:1;min-width:0">
+        <div style="font-weight:700;font-size:15px">{{ chat.other_user.first_name|default:chat.other_user.username }}</div>
+        <div style="font-size:13px;color:var(--gray);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ chat.car }} — {{ chat.last_message.text|truncatechars:40 }}</div>
+      </div>
+      <div style="text-align:right">
+        <div style="font-size:12px;color:var(--gray)">{{ chat.last_message.created_at|date:"d.m H:i" }}</div>
+        {% if chat.unread > 0 %}
+        <div style="background:var(--red);color:white;border-radius:10px;padding:2px 8px;font-size:11px;font-weight:700;margin-top:4px;display:inline-block">{{ chat.unread }}</div>
+        {% endif %}
+      </div>
+    </a>
+    {% empty %}
+    <div class="empty-state"><span class="icon">💬</span><h3>Чатов нет</h3></div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}
