@@ -18,6 +18,11 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-change-this-12345')
 DEBUG = os.environ.get('DEBUG', 'True') == 'True'
 ALLOWED_HOSTS = ['*']
 
+CSRF_TRUSTED_ORIGINS = [
+    'https://web-production-b53ed.up.railway.app',
+    'https://*.railway.app',
+]
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
